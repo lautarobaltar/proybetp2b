@@ -3,6 +3,9 @@ const PATHMOCIventors = __dirname + '/inventors.json';
 const { parse } = require('path');
 const connection = require('./connectionMongo');
 
+const DB_NAME = 'BETP2-G3'
+const DB_COLECTION = 'inventors'
+
 async function readMocInventor(){
     return JSON.parse(await fs.readFile(PATHMOCIventors, 'utf8'));
 }
@@ -15,8 +18,8 @@ async function getAllInventors(){
    //return (await readMocInventor());
    const connectionMongo = await connection.getConnection();
    const inventors = await connectionMongo
-                        .db('sample_betp2b')
-                        .collection('inventors')
+                        .db(DB_NAME)
+                        .collection(DB_COLECTION)
                         .find()
                         .toArray();
     return inventors;
@@ -28,9 +31,9 @@ async function getInventor(id){
     // return inventor;
     const connectionMongo = await connection.getConnection();
     const inventor = await connectionMongo
-                         .db('sample_betp2b')
-                         .collection('inventors')
-                         .findOne({_id: parseInt(id) });
+                        .db(DB_NAME)
+                        .collection(DB_COLECTION)
+                        .findOne({_id: parseInt(id) });
     return inventor;
 }
 
@@ -40,8 +43,8 @@ async function pushInventor(inventor){
     // await writeMocInventor(data);
     const connectionMongo = await connection.getConnection();
     const result = await connectionMongo
-                         .db('sample_betp2b')
-                         .collection('inventors')
+                        .db(DB_NAME)
+                        .collection(DB_COLECTION)
                          .insertOne(inventor);
     return result;
 }
@@ -64,8 +67,9 @@ async function updateInventor(inventor){
             img: inventor.img
         }
     };
-    const result = await connectionMongo.db('sample_betp2b')
-                            .collection('inventors')
+    const result = await connectionMongo
+                            .db(DB_NAME)
+                            .collection(DB_COLECTION)
                             .updateOne(query, newValues);
     return result;
 }
@@ -78,8 +82,9 @@ async function deleteInventor(id){
     // );
     // await writeMocInventor(data);
     const connectionMongo = await connection.getConnection();
-    const result = await connectionMongo.db('sample_betp2b')
-                            .collection('inventors')
+    const result = await connectionMongo
+                            .db(DB_NAME)
+                            .collection(DB_COLECTION)
                             .deleteOne({_id: parseInt(id)});
     return result;
 }
