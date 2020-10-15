@@ -8,6 +8,7 @@ let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 let inventorsRouter = require('./routes/inventors');
 let virusRouter = require('./routes/virus');
+let authRouter = require('./routes/auth');
 
 let app = express();
 
@@ -17,7 +18,7 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -25,6 +26,7 @@ app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/inventors',inventorsRouter);
 app.use('/api/virus', virusRouter);
+app.use('/api/auth',authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

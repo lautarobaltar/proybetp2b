@@ -1,5 +1,3 @@
-// mongodb+srv://admin:betp2b@cluster0.7et2f.mongodb.net/sample_betp2b?retryWrites=true&w=majority
-// mongodb+srv://lautaroBaltar:yDFQEsh26TCuvB12@betp2-g3.rfslc.mongodb.net/BETP2-G3?retryWrites=true&w=majority
 const mongoClient = require('mongodb').MongoClient;
 const chalk = require('chalk');
 
