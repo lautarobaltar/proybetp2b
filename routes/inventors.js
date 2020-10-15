@@ -1,9 +1,36 @@
 let express = require('express');
 let router = express.Router();
 const dataInventor = require('./../data/Inventor');
+let config = require('../configs/config');
+let jwt = require('jsonwebtoken');
+
+let app = express();
+app.set('llave', config.llave);
+
+router.use((req, res, next) => {
+    const token = req.headers['access-token'];
+    if (token) {
+      jwt.verify(token, app.get('llave'), (err, decoded) => {      
+        if (err) {
+            console.log('Token invalida')
+          return res.json({ mensaje: 'Token inválida' });    
+        } else {
+            console.log('Token valida!')
+          req.decoded = decoded;    
+          next();
+        }
+      });
+    } else {
+        console.log('Falta token en header')
+      res.send({ 
+          mensaje: 'Token no provista.' 
+      });
+    }
+ });
+
 
 /* GET listado de inventores */
-router.get('/', async function(req, res, next) {
+router.get('/' ,async function(req, res, next) {
   res.json(await dataInventor.getAllInventors());
 });
 
